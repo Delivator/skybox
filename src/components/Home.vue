@@ -9,15 +9,15 @@
 </template>
 
 <script>
-  import { ace } from "../assets/ace";
+  // import { ace } from "../assets/ace";
 
   export default {
     name: 'Home',
 
-    beforeCreate: function() {
-      const editor = ace.edit("editor");
-      editor.setTheme("ace/theme/monokai");
-      editor.session.setMode("ace/mode/javascript");
-    },
+    // beforeCreate: function() {
+    //   const editor = ace.edit("editor");
+    //   editor.setTheme("ace/theme/monokai");
+    //   editor.session.setMode("ace/mode/javascript");
+    // },
   }
 </script>
