@@ -1,22 +1,31 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="6">
+      <v-col cols="4">
         <codemirror
           ref="cmEditor"
-          :value="code"
-          :options="cmOptions"
+          :value="codePresets[0].html"
+          :options="cmOptionsHTML"
           @ready="onCmReady"
           @focus="onCmFocus"
           @input="onCmCodeChange"
         />
       </v-col>
-      <v-col cols="6">
-        <codemirror :value="code2" :options="cmOptions2" />
+      <v-col cols="4">
+        <codemirror :value="codePresets[0].js" :options="cmOptionsJS" />
+      </v-col>
+      <v-col cols="4">
+        <codemirror :value="codePresets[0].css" :options="cmOptionsCSS" />
       </v-col>
     </v-row>
   </v-container>
 </template>
+
+<style scoped>
+.CodeMirror {
+  height: auto;
+}
+</style>
 
 <script>
 // import { ace } from "../assets/ace";
@@ -33,6 +42,10 @@ import "codemirror/mode/css/css.js";
 // import theme style
 import "codemirror/theme/base16-dark.css";
 
+import defaultHTML from "raw-loader!../../templates/default/index.html";
+import defaultJS from "raw-loader!../../templates/default/main.js";
+import defaultCSS from "!raw-loader!../../templates/default/style.css";
+
 export default {
   name: "Home",
 
@@ -40,36 +53,35 @@ export default {
 
   data() {
     return {
-      cmOptions: {
+      cmOptionsHTML: {
         tabSize: 4,
         mode: "text/html",
         theme: "base16-dark",
         lineNumbers: true,
         line: true
-        // more CodeMirror options...
       },
-      cmOptions2: {
+      cmOptionsJS: {
+        tabSize: 4,
+        mode: "text/javascript",
+        theme: "base16-dark",
+        lineNumbers: true,
+        line: true
+      },
+      cmOptionsCSS: {
         tabSize: 4,
         mode: "text/css",
         theme: "base16-dark",
         lineNumbers: true,
         line: true
-        // more CodeMirror options...
       },
-      code: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
-</html>`,
-      code2: `html, body {
-  margin: 0;
-}`
+      codePresets: [
+        {
+          name: "Default",
+          html: defaultHTML,
+          js: defaultJS,
+          css: defaultCSS
+        }
+      ]
     };
   },
   methods: {
