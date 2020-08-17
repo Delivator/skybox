@@ -66,6 +66,7 @@
   width: 100%;
   height: 100%;
   position: fixed;
+  background-color: #121212;
 }
 .output-frame-mobile {
   height: 100vh;
