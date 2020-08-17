@@ -19,44 +19,44 @@
 </template>
 
 <script>
-  // import { ace } from "../assets/ace";
-  import {  codemirror } from "vue-codemirror"
+// import { ace } from "../assets/ace";
+import { codemirror } from "vue-codemirror";
 
-  // import base style
-  import "codemirror/lib/codemirror.css"
+// import base style
+import "codemirror/lib/codemirror.css";
 
-  // import language js
-  import "codemirror/mode/javascript/javascript.js"
-  import "codemirror/mode/htmlmixed/htmlmixed.js"
-  import "codemirror/mode/css/css.js"
+// import language js
+import "codemirror/mode/javascript/javascript.js";
+import "codemirror/mode/htmlmixed/htmlmixed.js";
+import "codemirror/mode/css/css.js";
 
-  // import theme style
-  import "codemirror/theme/base16-dark.css"
+// import theme style
+import "codemirror/theme/base16-dark.css";
 
-  export default {
-    name: "Home",
+export default {
+  name: "Home",
 
-    components: { codemirror },
+  components: { codemirror },
 
-      data () {
-        return {
-          cmOptions: {
-            tabSize: 4,
-            mode: "text/html",
-            theme: "base16-dark",
-            lineNumbers: true,
-            line: true,
-            // more CodeMirror options...
-          },
-          cmOptions2: {
-            tabSize: 4,
-            mode: "text/css",
-            theme: "base16-dark",
-            lineNumbers: true,
-            line: true,
-            // more CodeMirror options...
-          },
-          code: `<!DOCTYPE html>
+  data() {
+    return {
+      cmOptions: {
+        tabSize: 4,
+        mode: "text/html",
+        theme: "base16-dark",
+        lineNumbers: true,
+        line: true
+        // more CodeMirror options...
+      },
+      cmOptions2: {
+        tabSize: 4,
+        mode: "text/css",
+        theme: "base16-dark",
+        lineNumbers: true,
+        line: true
+        // more CodeMirror options...
+      },
+      code: `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -67,22 +67,22 @@
   
 </body>
 </html>`,
-          code2: `html, body {
+      code2: `html, body {
   margin: 0;
-}`,
-        }
-      },
-      methods: {
-        onCmReady(cm) {
-          console.log("the editor is readied!", cm)
-        },
-        onCmFocus(cm) {
-          console.log("the editor is focused!", cm)
-        },
-        onCmCodeChange(newCode) {
-          console.log("this is new code", newCode)
-          this.code = newCode
-        }
-      }
+}`
+    };
+  },
+  methods: {
+    onCmReady(cm) {
+      console.log("the editor is readied!", cm);
+    },
+    onCmFocus(cm) {
+      console.log("the editor is focused!", cm);
+    },
+    onCmCodeChange(newCode) {
+      console.log("this is new code", newCode);
+      this.code = newCode;
+    }
   }
+};
 </script>
