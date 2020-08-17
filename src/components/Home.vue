@@ -26,7 +26,10 @@
           @input="updateCSS"
         />
       </v-col>
-      <v-col cols="12" align-self="stretch">
+      <v-col cols="12" class="output-parent">
+        <v-btn class="open-output-btn" outlined @click="openOutput">
+          <v-icon>launch</v-icon>
+        </v-btn>
         <iframe
           :class="frameClass"
           class="output-frame"
@@ -72,6 +75,17 @@
   height: 100vh;
   position: absolute;
 }
+
+.open-output-btn {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  z-index: 1;
+}
+
+.output-parent {
+  position: relative;
+}
 </style>
 
 <script>
@@ -101,7 +115,7 @@ export default {
 
   data() {
     return {
-      outputUrl: "",
+      outputUrl: "/AABlUOjo0E08j1ZJz7x8gUfIBuIe34LnTwEbwLEbtK6qUA/",
       cmOptions: {
         tabSize: 4,
         mode: "text/html",
@@ -142,7 +156,7 @@ export default {
     updateCSS: function(newCode) {
       this.CSSCode = newCode;
     },
-    publish: async function() {
+    publish: async function(callback) {
       const client = new SkynetClient();
       const files = [
         new File([this.HTMLCode], "index.html", {
@@ -164,6 +178,11 @@ export default {
 
       const { skylink } = await client.uploadDirectory(directory, "skybox");
       this.outputUrl = `/${skylink}`;
+      if (callback) callback();
+    },
+
+    openOutput: function() {
+      window.open(this.outputUrl, "_blank");
     }
   },
 
@@ -173,9 +192,19 @@ export default {
     });
   },
 
+  mounted: function() {
+    document.addEventListener("keydown", event => {
+      if (event.key === "s" && event.ctrlKey) {
+        event.preventDefault();
+        // event.stopPropagation();
+        this.publish();
+      }
+    });
+  },
+
   computed: {
     // eslint-disable-next-line vue/return-in-computed-property
-    frameClass() {
+    frameClass: function() {
       if (/xs|sm|md/.test(this.$vuetify.breakpoint.name))
         return "output-frame-mobile";
     }

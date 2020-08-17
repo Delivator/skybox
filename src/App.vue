@@ -7,7 +7,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn @click="bus.$emit('publish')" color="success">Save</v-btn>
+      <v-btn @click="bus.$emit('publish')" color="error">Save</v-btn>
     </v-app-bar>
 
     <v-main>
