@@ -7,6 +7,7 @@
           :value="HTMLCode"
           :options="cmOptions"
           @input="updateHTML"
+          ref="HTMLEditor"
         />
       </v-col>
       <v-col lg="4" md="12">
@@ -16,6 +17,7 @@
           :value="JSCode"
           :options="{ ...cmOptions, mode: 'text/javascript' }"
           @input="updateJS"
+          ref="JSEditor"
         />
       </v-col>
       <v-col lg="4" md="12">
@@ -24,6 +26,7 @@
           :value="CSSCode"
           :options="{ ...cmOptions, mode: 'text/css' }"
           @input="updateCSS"
+          ref="CSSEditor"
         />
       </v-col>
       <v-col cols="12" class="output-parent">
@@ -113,6 +116,8 @@ import defaultHTML from "!raw-loader!../../templates/default/index.html";
 import defaultCSS from "!raw-loader!../../templates/default/style.css";
 import defaultJS from "!raw-loader!../../templates/default/main.js";
 
+const client = new SkynetClient();
+
 export default {
   name: "Home",
 
@@ -164,7 +169,6 @@ export default {
       this.CSSCode = newCode;
     },
     publish: async function (callback) {
-      const client = new SkynetClient();
       const files = [
         new File([this.HTMLCode], "index.html", {
           type: "text/html",
@@ -219,6 +223,21 @@ export default {
         this.publish();
       }
     });
+
+    document.addEventListener("drop", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (event.dataTransfer && event.dataTransfer.files) {
+        const file = event.dataTransfer.files[0];
+        let doc = this.htmlEditor.getDoc();
+        var cursor;
+        setTimeout(() => {
+          cursor = doc.getCursor();
+        }, 100);
+        const { skylink } = await client.upload(file);
+        doc.replaceRange(`/${skylink}`, cursor);
+      }
+    });
   },
 
   computed: {
@@ -226,6 +245,15 @@ export default {
     frameClass: function () {
       if (/xs|sm|md/.test(this.$vuetify.breakpoint.name))
         return "output-frame-mobile";
+    },
+    htmlEditor() {
+      return this.$refs.HTMLEditor.codemirror;
+    },
+    jsEditor() {
+      return this.$refs.JSEditor.codemirror;
+    },
+    cssEditor() {
+      return this.$refs.CSSEditor.codemirror;
     },
   },
 };
