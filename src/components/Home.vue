@@ -4,7 +4,7 @@
       <v-col lg="4" md="12">
         <p>{{ codePresets[0].html.filename }}</p>
         <codemirror
-          :value="codePresets[0].html.content"
+          :value="HTMLCode"
           :options="cmOptions"
           @input="updateHTML"
         />
@@ -13,7 +13,7 @@
         <p>{{ codePresets[0].js.filename }}</p>
         <codemirror
           class="editorBorder"
-          :value="codePresets[0].js.content"
+          :value="JSCode"
           :options="{ ...cmOptions, mode: 'text/javascript' }"
           @input="updateJS"
         />
@@ -21,19 +21,25 @@
       <v-col lg="4" md="12">
         <p>{{ codePresets[0].css.filename }}</p>
         <codemirror
-          :value="codePresets[0].css.content"
+          :value="CSSCode"
           :options="{ ...cmOptions, mode: 'text/css' }"
           @input="updateCSS"
         />
       </v-col>
       <v-col cols="12" class="output-parent">
-        <v-btn class="open-output-btn" outlined @click="openOutput">
+        <v-btn
+          class="open-output-btn"
+          outlined
+          :href="`/${outputUrl}`"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <v-icon>launch</v-icon>
         </v-btn>
         <iframe
           :class="frameClass"
           class="output-frame"
-          :src="outputUrl"
+          :src="`/${outputUrl}`"
           frameborder="0"
         ></iframe>
       </v-col>
@@ -69,7 +75,6 @@
   width: 100%;
   height: 100%;
   position: fixed;
-  background-color: #121212;
 }
 .output-frame-mobile {
   height: 100vh;
@@ -90,6 +95,7 @@
 
 <script>
 import { getRelativeFilePath, SkynetClient } from "skynet-js";
+import { utils } from "../mixins/utils";
 
 // codemirror imports
 import { codemirror } from "vue-codemirror";
@@ -112,10 +118,11 @@ export default {
 
   props: ["bus"],
   components: { codemirror },
+  mixins: [utils],
 
   data() {
     return {
-      outputUrl: "/AABlUOjo0E08j1ZJz7x8gUfIBuIe34LnTwEbwLEbtK6qUA/",
+      outputUrl: "AABlUOjo0E08j1ZJz7x8gUfIBuIe34LnTwEbwLEbtK6qUA",
       cmOptions: {
         tabSize: 4,
         mode: "text/html",
@@ -177,12 +184,9 @@ export default {
       }, {});
 
       const { skylink } = await client.uploadDirectory(directory, "skybox");
-      this.outputUrl = `/${skylink}`;
+      this.outputUrl = skylink;
+      document.location.hash = skylink;
       if (callback) callback();
-    },
-
-    openOutput: function () {
-      window.open(this.outputUrl, "_blank");
     },
   },
 
@@ -190,13 +194,28 @@ export default {
     this.bus.$on("publish", () => {
       this.publish();
     });
+
+    const hash = document.location.hash.replace("#", "");
+    if (hash && this.skylinkRegex.test(hash)) {
+      this.getSkylinkFiles(hash).then(async (metadata) => {
+        const subfiles = metadata.subfiles;
+        if (!subfiles) return;
+        if (subfiles["index.html"])
+          this.HTMLCode = await this.getFileContent(`${hash}/index.html`);
+        if (subfiles["main.js"])
+          this.JSCode = await this.getFileContent(`${hash}/main.js`);
+        if (subfiles["style.css"])
+          this.CSSCode = await this.getFileContent(`${hash}/style.css`);
+        this.outputUrl = hash;
+      });
+    }
   },
 
   mounted: function () {
+    // Publish when the you press CTRL+S
     document.addEventListener("keydown", (event) => {
       if (event.key === "s" && event.ctrlKey) {
         event.preventDefault();
-        // event.stopPropagation();
         this.publish();
       }
     });

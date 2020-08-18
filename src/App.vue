@@ -1,13 +1,19 @@
 <template>
   <v-app>
     <v-app-bar app color="teal" dark>
-      <v-toolbar-title class="headline text-uppercase" to="/">
-        Skybox
+      <v-toolbar-title class="headline text-uppercase">
+        <a href="/" class="white--text">Skybox</a>
       </v-toolbar-title>
-
+      <v-btn
+        class="run-btn"
+        @click="bus.$emit('publish')"
+        color="white"
+        outlined
+        tile
+      >
+        <v-icon left>send</v-icon> GO
+      </v-btn>
       <v-spacer></v-spacer>
-
-      <v-btn @click="bus.$emit('publish')" color="error">Save</v-btn>
     </v-app-bar>
 
     <v-main>
@@ -29,6 +35,14 @@ html {
 }
 ::-webkit-scrollbar-thumb {
   background-color: #555;
+}
+
+.run-btn {
+  margin-left: 1rem;
+}
+
+.headline a {
+  text-decoration: none;
 }
 </style>
 
