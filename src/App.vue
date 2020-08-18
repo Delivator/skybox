@@ -39,14 +39,14 @@ import Vue from "vue";
 export default {
   name: "App",
 
-  data: function() {
+  data: function () {
     return {
-      bus: new Vue()
+      bus: new Vue(),
     };
   },
 
   components: {
-    Home
-  }
+    Home,
+  },
 };
 </script>

@@ -1,3 +1,3 @@
 module.exports = {
-  portal: "https://skyportal.xyz"
+  portal: "https://skyportal.xyz",
 };

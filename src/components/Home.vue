@@ -121,53 +121,53 @@ export default {
         mode: "text/html",
         theme: "base16-dark",
         lineNumbers: true,
-        line: true
+        line: true,
       },
       codePresets: [
         {
           name: "Default",
           html: {
             filename: "index.html",
-            content: defaultHTML
+            content: defaultHTML,
           },
           js: {
             filename: "main.js",
-            content: defaultJS
+            content: defaultJS,
           },
           css: {
             filename: "style.css",
-            content: defaultCSS
-          }
-        }
+            content: defaultCSS,
+          },
+        },
       ],
       HTMLCode: defaultHTML,
       JSCode: defaultJS,
-      CSSCode: defaultCSS
+      CSSCode: defaultCSS,
     };
   },
 
   methods: {
-    updateHTML: function(newCode) {
+    updateHTML: function (newCode) {
       this.HTMLCode = newCode;
     },
-    updateJS: function(newCode) {
+    updateJS: function (newCode) {
       this.JSCode = newCode;
     },
-    updateCSS: function(newCode) {
+    updateCSS: function (newCode) {
       this.CSSCode = newCode;
     },
-    publish: async function(callback) {
+    publish: async function (callback) {
       const client = new SkynetClient();
       const files = [
         new File([this.HTMLCode], "index.html", {
-          type: "text/html"
+          type: "text/html",
         }),
         new File([this.JSCode], "main.js", {
-          type: "text/javascript"
+          type: "text/javascript",
         }),
         new File([this.CSSCode], "style.css", {
-          type: "text/css"
-        })
+          type: "text/css",
+        }),
       ];
 
       const directory = files.reduce((accumulator, file) => {
@@ -181,9 +181,9 @@ export default {
       if (callback) callback();
     },
 
-    openOutput: function() {
+    openOutput: function () {
       window.open(this.outputUrl, "_blank");
-    }
+    },
   },
 
   created() {
@@ -192,8 +192,8 @@ export default {
     });
   },
 
-  mounted: function() {
-    document.addEventListener("keydown", event => {
+  mounted: function () {
+    document.addEventListener("keydown", (event) => {
       if (event.key === "s" && event.ctrlKey) {
         event.preventDefault();
         // event.stopPropagation();
@@ -204,10 +204,10 @@ export default {
 
   computed: {
     // eslint-disable-next-line vue/return-in-computed-property
-    frameClass: function() {
+    frameClass: function () {
       if (/xs|sm|md/.test(this.$vuetify.breakpoint.name))
         return "output-frame-mobile";
-    }
-  }
+    },
+  },
 };
 </script>

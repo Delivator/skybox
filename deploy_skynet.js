@@ -10,8 +10,8 @@ console.log(`Uploading ${path} to ${config.portal}`);
 
 skynet
   .uploadDirectory(path, opts)
-  .then(resp => {
+  .then((resp) => {
     const skylink = resp.replace("sia://", "");
     console.log(`Done: ${config.portal}/${skylink}/`);
   })
-  .catch(err => console.error(err.message));
+  .catch((err) => console.error(err.message));
