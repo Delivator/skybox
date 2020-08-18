@@ -33,5 +33,8 @@ export const utils = {
           .catch(reject);
       });
     },
+    sleep: function (time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    },
   },
 };

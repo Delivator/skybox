@@ -10,6 +10,7 @@
         color="white"
         outlined
         tile
+        :loading="btnLoading"
       >
         <v-icon left>send</v-icon> GO
       </v-btn>
@@ -17,7 +18,7 @@
     </v-app-bar>
 
     <v-main>
-      <Home :bus="bus" />
+      <Home :bus="bus" :btnLoading.sync="btnLoading" />
     </v-main>
   </v-app>
 </template>
@@ -56,6 +57,7 @@ export default {
   data: function () {
     return {
       bus: new Vue(),
+      btnLoading: false,
     };
   },
 

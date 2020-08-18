@@ -36,6 +36,7 @@
           :href="`/${outputUrl}`"
           target="_blank"
           rel="noopener noreferrer"
+          :loading="frameLoading"
         >
           <v-icon>launch</v-icon>
         </v-btn>
@@ -44,6 +45,8 @@
           class="output-frame"
           :src="`/${outputUrl}`"
           frameborder="0"
+          @loadstart="frameLoading = true"
+          @loaded="frameLoading = false"
         ></iframe>
       </v-col>
     </v-row>
@@ -121,7 +124,7 @@ const client = new SkynetClient();
 export default {
   name: "Home",
 
-  props: ["bus"],
+  props: ["bus", "btnLoading"],
   components: { codemirror },
   mixins: [utils],
 
@@ -134,6 +137,7 @@ export default {
         theme: "base16-dark",
         lineNumbers: true,
         line: true,
+        allowDropFileTypes: [],
       },
       codePresets: [
         {
@@ -155,6 +159,7 @@ export default {
       HTMLCode: defaultHTML,
       JSCode: defaultJS,
       CSSCode: defaultCSS,
+      frameLoading: false,
     };
   },
 
@@ -169,6 +174,7 @@ export default {
       this.CSSCode = newCode;
     },
     publish: async function (callback) {
+      this.$emit("update:btnLoading", true);
       const files = [
         new File([this.HTMLCode], "index.html", {
           type: "text/html",
@@ -183,14 +189,36 @@ export default {
 
       const directory = files.reduce((accumulator, file) => {
         const path = getRelativeFilePath(file);
-
         return { ...accumulator, [path]: file };
       }, {});
 
-      const { skylink } = await client.uploadDirectory(directory, "skybox");
-      this.outputUrl = skylink;
-      document.location.hash = skylink;
-      if (callback) callback();
+      try {
+        const { skylink } = await client.uploadDirectory(directory, "skybox");
+        this.$emit("update:btnLoading", false);
+        this.outputUrl = skylink;
+        document.location.hash = skylink;
+        if (callback) callback();
+      } catch (error) {
+        this.$emit("update:btnLoading", false);
+        console.error(error);
+      }
+    },
+
+    generateCodeSnipet: function (file, link) {
+      if (/^image\//.test(file.type)) {
+        return `<img src="/${link}" alt="${file.name}">`;
+      } else if (/^video\//.test(file.type)) {
+        return `<video src="/${link}" controls></video>`;
+      } else if (/^audio\//.test(file.type)) {
+        return `<audio src="/${link}" controls></audio>`;
+      } else if (/\/javascrip/.test(file.type)) {
+        // eslint-disable-next-line no-useless-escape
+        return `<script src="/${link}"><\/script>`;
+      } else if (/\/css/.test(file.type)) {
+        return `<link rel="stylesheet" href="/${link}">`;
+      } else {
+        return `/${link}`;
+      }
     },
   },
 
@@ -224,6 +252,11 @@ export default {
       }
     });
 
+    document.addEventListener("drag", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    });
+
     document.addEventListener("drop", async (event) => {
       event.preventDefault();
       event.stopPropagation();
@@ -231,11 +264,15 @@ export default {
         const file = event.dataTransfer.files[0];
         let doc = this.htmlEditor.getDoc();
         var cursor;
-        setTimeout(() => {
-          cursor = doc.getCursor();
-        }, 100);
+        await this.sleep(100);
+        cursor = doc.getCursor();
+        doc.replaceRange(`Uploading ${file.name}...`, cursor);
         const { skylink } = await client.upload(file);
-        doc.replaceRange(`/${skylink}`, cursor);
+        let newCursor = doc.getCursor();
+        this.HTMLCode = this.HTMLCode.replace(`Uploading ${file.name}...`, "");
+        await this.sleep(100);
+        doc.replaceRange(this.generateCodeSnipet(file, skylink), cursor);
+        doc.setCursor(newCursor);
       }
     });
   },
