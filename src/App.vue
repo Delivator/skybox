@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="teal" dark>
       <v-toolbar-title class="headline text-uppercase">
-        <a href="/" class="white--text">Skybox</a>
+        <a href="./" class="white--text">Skybox</a>
       </v-toolbar-title>
       <v-btn
         class="run-btn"
