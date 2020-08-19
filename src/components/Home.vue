@@ -91,6 +91,7 @@
 <style>
 .CodeMirror {
   height: 40vh;
+  max-width: 100vw;
 }
 
 .editorBorder {
@@ -282,28 +283,32 @@ export default {
       }
     });
 
-    document.addEventListener("drag", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-    });
-
     document.addEventListener("drop", async (event) => {
       event.preventDefault();
       event.stopPropagation();
-      if (event.dataTransfer && event.dataTransfer.files) {
-        const file = event.dataTransfer.files[0];
-        let doc = this.htmlEditor.getDoc();
-        var cursor;
-        await this.sleep(100);
-        cursor = doc.getCursor();
-        doc.replaceRange(`Uploading ${file.name}...`, cursor);
-        const { skylink } = await client.upload(file);
-        let newCursor = doc.getCursor();
-        this.HTMLCode = this.HTMLCode.replace(`Uploading ${file.name}...`, "");
-        await this.sleep(100);
-        doc.replaceRange(this.generateCodeSnipet(file, skylink), cursor);
-        doc.setCursor(newCursor);
-      }
+
+      let isHTMLEditor = false;
+
+      event.path.forEach((element) => {
+        if (isHTMLEditor || !element.classList) return;
+        isHTMLEditor = element.classList.contains("htmlEditor");
+      });
+
+      if (!isHTMLEditor || !event.dataTransfer || !event.dataTransfer.files)
+        return;
+
+      const file = event.dataTransfer.files[0];
+      let doc = this.htmlEditor.getDoc();
+      let cursor;
+      await this.sleep(100);
+      cursor = doc.getCursor();
+      doc.replaceRange(`Uploading ${file.name}...`, cursor);
+      const { skylink } = await client.upload(file);
+      let newCursor = doc.getCursor();
+      this.HTMLCode = this.HTMLCode.replace(`Uploading ${file.name}...`, "");
+      await this.sleep(100);
+      doc.replaceRange(this.generateCodeSnipet(file, skylink), cursor);
+      doc.setCursor(newCursor);
     });
   },
 
