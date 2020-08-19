@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="main-container">
-    <v-row no-gutters>
-      <v-col lg="4" md="12">
+    <div class="main-grid">
+      <div class="htmlEditor">
         <p>{{ codePresets[0].html.filename }}</p>
         <codemirror
           :value="HTMLCode"
@@ -9,8 +9,8 @@
           @input="updateHTML"
           ref="HTMLEditor"
         />
-      </v-col>
-      <v-col lg="4" md="12">
+      </div>
+      <div class="jsEditor">
         <p>{{ codePresets[0].js.filename }}</p>
         <codemirror
           class="editorBorder"
@@ -19,8 +19,8 @@
           @input="updateJS"
           ref="JSEditor"
         />
-      </v-col>
-      <v-col lg="4" md="12">
+      </div>
+      <div class="cssEditor">
         <p>{{ codePresets[0].css.filename }}</p>
         <codemirror
           :value="CSSCode"
@@ -28,8 +28,8 @@
           @input="updateCSS"
           ref="CSSEditor"
         />
-      </v-col>
-      <v-col cols="12" class="output-parent">
+      </div>
+      <div class="output">
         <v-btn
           class="open-output-btn"
           outlined
@@ -48,10 +48,45 @@
           @loadstart="frameLoading = true"
           @loaded="frameLoading = false"
         ></iframe>
-      </v-col>
-    </v-row>
+      </div>
+    </div>
   </v-container>
 </template>
+
+<style scoped>
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(3, calc(100vw / 3));
+  grid-template-rows: auto calc(100% - 21px);
+  grid-template-areas: "htmlEditor jsEditor cssEditor" "output output output";
+}
+
+@media only screen and (max-width: 1200px) {
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas: "htmlEditor" "jsEditor" "cssEditor" "output";
+  }
+}
+
+.output {
+  grid-area: output;
+  position: relative;
+}
+
+.htmlEditor {
+  grid-area: htmlEditor;
+}
+
+.jsEditor {
+  grid-area: jsEditor;
+}
+
+.cssEditor {
+  grid-area: cssEditor;
+}
+</style>
 
 <style>
 .CodeMirror {
@@ -80,7 +115,6 @@
 .output-frame {
   width: 100%;
   height: 100%;
-  position: fixed;
 }
 .output-frame-mobile {
   height: 100vh;
@@ -92,10 +126,6 @@
   right: 1rem;
   top: 1rem;
   z-index: 1;
-}
-
-.output-parent {
-  position: relative;
 }
 </style>
 
@@ -130,7 +160,7 @@ export default {
 
   data() {
     return {
-      outputUrl: "AABlUOjo0E08j1ZJz7x8gUfIBuIe34LnTwEbwLEbtK6qUA",
+      outputUrl: "AAA_T8m8K4Uj7e3LkfpUbGmnc2gAQbfnAxJpIFJlDs16KA",
       cmOptions: {
         tabSize: 4,
         mode: "text/html",
