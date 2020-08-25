@@ -251,15 +251,10 @@ export default {
         return `/${link}`;
       }
     },
-  },
 
-  created() {
-    this.bus.$on("publish", () => {
-      this.publish();
-    });
-
-    const hash = document.location.hash.replace("#", "");
-    if (hash && this.skylinkRegex.test(hash)) {
+    loadHashSkylink: function () {
+      const hash = location.hash.replace("#", "");
+      if (!hash || !this.skylinkRegex.test(hash)) return;
       this.getSkylinkFiles(hash).then(async (metadata) => {
         const subfiles = metadata.subfiles;
         if (!subfiles) return;
@@ -271,7 +266,17 @@ export default {
           this.CSSCode = await this.getFileContent(`${hash}/style.css`);
         this.outputUrl = hash;
       });
-    }
+    },
+  },
+
+  beforeMount: function () {
+    this.loadHashSkylink();
+  },
+
+  created() {
+    this.bus.$on("publish", () => {
+      this.publish();
+    });
   },
 
   mounted: function () {
@@ -309,6 +314,12 @@ export default {
       await this.sleep(100);
       doc.replaceRange(this.generateCodeSnipet(file, skylink), cursor);
       doc.setCursor(newCursor);
+    });
+
+    window.addEventListener("hashchange", () => {
+      const hash = document.location.hash.replace("#", "");
+      if (!hash || this.outputUrl === hash) return;
+      this.loadHashSkylink();
     });
   },
 
