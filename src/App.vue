@@ -28,16 +28,6 @@
 html {
   overflow: auto;
 }
-::-webkit-scrollbar-track {
-  background-color: #202020;
-}
-::-webkit-scrollbar {
-  width: 13px;
-  background-color: #202020;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #555;
-}
 
 .run-btn {
   margin-left: 1rem;

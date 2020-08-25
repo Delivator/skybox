@@ -32,11 +32,12 @@
       <div class="output">
         <v-btn
           class="open-output-btn"
-          outlined
           :href="`/${outputUrl}`"
           target="_blank"
           rel="noopener noreferrer"
           :loading="frameLoading"
+          fab
+          color="primary"
         >
           <v-icon>launch</v-icon>
         </v-btn>
