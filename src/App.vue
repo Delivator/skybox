@@ -15,6 +15,7 @@
         <v-icon left>send</v-icon> GO
       </v-btn>
       <v-spacer></v-spacer>
+      <PortalSwitcher />
     </v-app-bar>
 
     <v-main>
@@ -48,6 +49,7 @@ html {
 </style>
 
 <script>
+import PortalSwitcher from "./components/PortalSwitcher";
 import Home from "./components/Home";
 import Vue from "vue";
 
@@ -63,6 +65,7 @@ export default {
 
   components: {
     Home,
+    PortalSwitcher,
   },
 };
 </script>
