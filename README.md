@@ -12,7 +12,7 @@
 - Main: https://skyportal.xyz/_BG-CT17JmJj0kXMEsYGYwvXiJhcuRmB3HB-pxycTpzigw/
 - Bootstrap: [#AACTVxB2AC-qj835kWc9R_SlhZDoKPwXwytC13h8Q6Y4dQ](https://skyportal.xyz/_BG-CT17JmJj0kXMEsYGYwvXiJhcuRmB3HB-pxycTpzigw/#AACTVxB2AC-qj835kWc9R_SlhZDoKPwXwytC13h8Q6Y4dQ)
 - Vue.js: [#AADtoaBb0LpLZUlW08pU3Od6kk1U9GtqcX9qRipkyEKH4g](https://skyportal.xyz/_BG-CT17JmJj0kXMEsYGYwvXiJhcuRmB3HB-pxycTpzigw/#AADtoaBb0LpLZUlW08pU3Od6kk1U9GtqcX9qRipkyEKH4g)
-- Vue.js: [#AACb0OiSA_jq8hr4tfgESzcGZHJiRPARlwZIPRq-9H5Tng](https://skyportal.xyz/_BG-CT17JmJj0kXMEsYGYwvXiJhcuRmB3HB-pxycTpzigw/#AACb0OiSA_jq8hr4tfgESzcGZHJiRPARlwZIPRq-9H5Tng)
+- Empty blog layout: [#AACb0OiSA_jq8hr4tfgESzcGZHJiRPARlwZIPRq-9H5Tng](https://skyportal.xyz/_BG-CT17JmJj0kXMEsYGYwvXiJhcuRmB3HB-pxycTpzigw/#AACb0OiSA_jq8hr4tfgESzcGZHJiRPARlwZIPRq-9H5Tng)
 - "Spill the beans" Blog: [#vACgWFAFiGwsgq-vY2mLdpzXbDlf3C0RyLcq_v8dYUOfGg](https://skyportal.xyz/_BG-CT17JmJj0kXMEsYGYwvXiJhcuRmB3HB-pxycTpzigw/#vACgWFAFiGwsgq-vY2mLdpzXbDlf3C0RyLcq_v8dYUOfGg) (Notice how only index.html loads becuase this app uses custom paths for it's style.css)
 
 ## Screenshots
