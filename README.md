@@ -10,7 +10,7 @@
 
 ## Example Pages
 - Main: https://diif.hns.skyportal.xyz/
-- SkyDB: [#AAAAFBZzW7ASvBVY8Jri4eZGZ7UhtWynFTlpJ2gDTbuQxg](https://diif.hns.skyportal.xyz/#AAAAFBZzW7ASvBVY8Jri4eZGZ7UhtWynFTlpJ2gDTbuQxg)
+- SkyDB: [#AADryYwqOF7qfrYylKW1LfKPGmbP05YcLiDuyyX3a0JAvw](https://diif.hns.skyportal.xyz/#AADryYwqOF7qfrYylKW1LfKPGmbP05YcLiDuyyX3a0JAvw)
 - Bootstrap: [#AACTVxB2AC-qj835kWc9R_SlhZDoKPwXwytC13h8Q6Y4dQ](https://diif.hns.skyportal.xyz/#AACTVxB2AC-qj835kWc9R_SlhZDoKPwXwytC13h8Q6Y4dQ)
 - Vue.js: [#AADtoaBb0LpLZUlW08pU3Od6kk1U9GtqcX9qRipkyEKH4g](https://diif.hns.skyportal.xyz/#AADtoaBb0LpLZUlW08pU3Od6kk1U9GtqcX9qRipkyEKH4g)
 - Empty blog layout: [#AACb0OiSA_jq8hr4tfgESzcGZHJiRPARlwZIPRq-9H5Tng](https://diif.hns.skyportal.xyz/#AACb0OiSA_jq8hr4tfgESzcGZHJiRPARlwZIPRq-9H5Tng)
