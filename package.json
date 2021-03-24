@@ -14,7 +14,7 @@
     "skynet-js": "^2.9.0",
     "vue": "^2.6.12",
     "vue-codemirror": "^4.0.6",
-    "vuetify": "^2.3.21"
+    "vuetify": "^2.4.8"
   },
   "devDependencies": {
     "@nebulous/skynet": "^2.0.1",
