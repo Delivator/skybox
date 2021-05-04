@@ -10,7 +10,7 @@
     "publish": "node deploy_skynet.js"
   },
   "dependencies": {
-    "core-js": "^3.8.1",
+    "core-js": "^3.11.2",
     "skynet-js": "^2.9.0",
     "vue": "^2.6.12",
     "vue-codemirror": "^4.0.6",
