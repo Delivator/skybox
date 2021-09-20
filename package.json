@@ -10,7 +10,7 @@
     "publish": "node deploy_skynet.js"
   },
   "dependencies": {
-    "core-js": "^3.8.1",
+    "core-js": "^3.18.0",
     "skynet-js": "^2.9.0",
     "vue": "^2.6.12",
     "vue-codemirror": "^4.0.6",
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@nebulous/skynet": "^2.0.1",
-    "@vue/cli-plugin-babel": "~4.5.9",
+    "@vue/cli-plugin-babel": "~4.5.13",
     "@vue/cli-plugin-eslint": "~4.5.3",
     "@vue/cli-service": "~4.5.9",
     "@vue/eslint-config-prettier": "^6.0.0",
